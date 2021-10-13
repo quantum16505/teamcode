@@ -11,13 +11,26 @@ import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 public class EncoderAuto extends LinearOpMode {
     HardwareProfile robot = new HardwareProfile();
     private ElapsedTime runtime = new ElapsedTime();
+
+    static final double COUNTS_PER_MOTOR_REV = 384.5;    // eg: TETRIX Motor Encoder
+    static final double DRIVE_GEAR_REDUCTION = 2.0;     // This is < 1.0 if geared UP
+    static final double WHEEL_DIAMETER_INCHES = 4.0;     // For figuring circumference
+    static final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double DRIVE_SPEED = 0.6;
+    static final double TURN_SPEED = 0.5;
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
+        robot.RearLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.RearRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         waitForStart();
-        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        encoderDrive(DRIVE_SPEED, 12.6, 12.6, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
     }
 
     public void encoderDrive(double speed,
@@ -30,8 +43,8 @@ public class EncoderAuto extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.RearLeftDrive.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.RearRightDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newLeftTarget = robot.RearLeftDrive.getCurrentPosition() + (int) (leftInches * COUNTS_PER_INCH);
+            newRightTarget = robot.RearRightDrive.getCurrentPosition() + (int) (rightInches * COUNTS_PER_INCH);
             robot.RearLeftDrive.setTargetPosition(newLeftTarget);
             robot.RearRightDrive.setTargetPosition(newRightTarget);
 
@@ -54,11 +67,12 @@ public class EncoderAuto extends LinearOpMode {
                     (runtime.seconds() < timeoutS) &&
                     (robot.RearLeftDrive.isBusy() && robot.RearRightDrive.isBusy())) {
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
-                telemetry.addData("Path2",  "Running at %7d :%7d",
+                telemetry.addData("Path1", "Running to %7d :%7d", newLeftTarget, newRightTarget);
+                telemetry.addData("Path2", "Running at %7d :%7d",
                         robot.RearLeftDrive.getCurrentPosition(),
                         robot.RearRightDrive.getCurrentPosition());
                 telemetry.update();
+
             }
 
             // Stop all motion;
@@ -70,5 +84,6 @@ public class EncoderAuto extends LinearOpMode {
             robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);   // optional pause after each move
-            }
+        }
+    }
 }

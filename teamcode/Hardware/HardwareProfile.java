@@ -28,7 +28,8 @@ public class HardwareProfile
     /* Public OpMode members. */
     public DcMotor RearRightDrive;
     public DcMotor RearLeftDrive;
-
+    public DcMotor FrontLeftDrive;
+    public DcMotor FrontRightDrive;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -46,12 +47,21 @@ public class HardwareProfile
         // Define and Initialize Motors
 
         RearRightDrive = hwMap.get(DcMotor.class,"rearrightdrive");
-        RearRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        RearRightDrive.setDirection(DcMotor.Direction.FORWARD);
         RearRightDrive.setPower(0);
 
         RearLeftDrive = hwMap.get(DcMotor.class,"rearleftdrive");
-        RearLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        RearLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         RearLeftDrive.setPower(0);
+
+        FrontLeftDrive = hwMap.get(DcMotor.class,"frontleftdrive");
+        FrontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        FrontLeftDrive.setPower(0);
+
+        FrontRightDrive = hwMap.get(DcMotor.class,"frontrightdrive");
+        FrontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        FrontRightDrive.setPower(0);
+
 
 
     }

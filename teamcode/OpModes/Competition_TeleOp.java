@@ -12,12 +12,6 @@ import org.firstinspires.ftc.teamcode.Hardware.HardwareProfile;
 @TeleOp(name = "Competition_TeleOp", group = "")
 public class Competition_TeleOp extends LinearOpMode {
 
-    public DcMotor frontrightdrive;
-    public DcMotor rearrightdrive;
-    public DcMotor frontleftdrive;
-    public DcMotor rearleftdrive;
-    private double SpeedMod = 0.75;
-
     HardwareProfile robot = new HardwareProfile();   // Use a Pushbot's hardware
 
     double left;
@@ -32,10 +26,10 @@ public class Competition_TeleOp extends LinearOpMode {
     @Override
     public void runOpMode() {
         robot.init(hardwareMap);
-        robot.RearLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.RearRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        robot.RearLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        robot.RearRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        robot.RearLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        robot.RearRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
 
@@ -61,6 +55,8 @@ public class Competition_TeleOp extends LinearOpMode {
                 // Output the safe vales to the motor drives
                 robot.RearLeftDrive.setPower(left);
                 robot.RearRightDrive.setPower(right);
+                robot.FrontLeftDrive.setPower(left);
+                robot.FrontRightDrive.setPower(right);
                 telemetry.addData("Path0",  "Starting at %7d :%7d",
                         robot.RearLeftDrive.getCurrentPosition(),
                         robot.RearRightDrive.getCurrentPosition());
