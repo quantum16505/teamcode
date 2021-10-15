@@ -19,7 +19,7 @@ public class Competition_TeleOp extends LinearOpMode {
     double drive;
     double turn;
     double max;
-
+    double SpeedMod = 0.75;
     /**
      * This function is executed when this Op Mode is selected from the Driver Station.
      */
@@ -53,10 +53,10 @@ public class Competition_TeleOp extends LinearOpMode {
                 }
 
                 // Output the safe vales to the motor drives
-                robot.RearLeftDrive.setPower(left);
-                robot.RearRightDrive.setPower(right);
-                robot.FrontLeftDrive.setPower(left);
-                robot.FrontRightDrive.setPower(right);
+                robot.RearLeftDrive.setPower(SpeedMod * left);
+                robot.RearRightDrive.setPower(SpeedMod * right);
+                robot.FrontLeftDrive.setPower(SpeedMod * left);
+                robot.FrontRightDrive.setPower(SpeedMod * right);
                 telemetry.addData("Path0",  "Starting at %7d :%7d",
                         robot.RearLeftDrive.getCurrentPosition(),
                         robot.RearRightDrive.getCurrentPosition());
